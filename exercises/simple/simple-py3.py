@@ -11,13 +11,11 @@
 import os
 import csv
 
-
-
 DATADIR = ""
 DATAFILE = "beatles.csv"
 
 def parse_file(datafile):
-    with open(datafile, "r", encoding='ascii') as f:
+    with open(datafile, "r",encoding='ascii') as f:
         data = []
         readCSV = csv.reader(f, delimiter=',',quotechar='"')
         count = 1
@@ -51,4 +49,4 @@ def test():
     assert d[0] == firstline
     assert d[9] == tenthline
 
-test()
+print(parse_file(DATAFILE))
