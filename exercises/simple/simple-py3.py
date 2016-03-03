@@ -15,7 +15,7 @@ DATADIR = ""
 DATAFILE = "beatles.csv"
 
 def parse_file(datafile):
-    with open(datafile, "r",encoding='ascii') as f:
+    with open(datafile, "r") as f:
         data = []
         readCSV = csv.reader(f, delimiter=',',quotechar='"')
         count = 1
