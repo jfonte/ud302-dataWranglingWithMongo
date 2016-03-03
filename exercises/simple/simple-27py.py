@@ -1,5 +1,4 @@
-'''
-Your task is:
+'''Your task is:
  1. read the input DATAFILE line by line
  2. for the first 10 lines (not including the header) split each line on "," 
  3. then for each line, create a dictionary where the key is the header title of the field, and the value is the value of that field in the row.
@@ -14,6 +13,7 @@ Remember, you have to parse only the first 10 data lines in this exercise, so th
 # load modules to make my life easier
 import os
 import csv # used to read CSV files
+import pprint
 from io import open
 
 # define location of file
@@ -21,40 +21,26 @@ from io import open
 DATADIR = ''
 DATAFILE = "beatles.csv"
 
-def parse_file(datafile):
+def parse_csv(datafile):
 
 	# initialize dictionary stores
-
 	data = []
-
-	# let's open the file
-	with open(datafile, "r", encoding='ascii') as f:
-		readCSV = csv.reader(f, delimiter =',', quotechar='"')
-	
-		# counter to read only the first 10 lines
-		count = 1
-		for row in readCSV:
-			temp = {}
-			# grab headers
-			if count == 1:
-				headers = row
-				# print headers
-			# create dictionary for each row
-			if count>1:
-				for i in xrange(0, len(headers)):
-					# check if field exists, if not create & add keypair
-					temp.setdefault(headers[i], row[i])
-					# print headers[i],row[i]
-				# add dictionary from row to data
-				data.append(temp)
-			# jump to next row
-			count +=1
-
-			# get only first 10 rows
-			if count>11:
+	count = 0
+	# let's open the file & create a dict from it
+	with open(datafile, 'rb') as f:
+		readCSV = csv.DictReader(f) # automatically takes first line as headers!
+		for line in readCSV:
+			if count == 10:
 				break
-		
+			data.append(line)
+			count +=1
 	return data
+
+if __name__ == '__main__':
+	datafile = os.path.join(DATADIR, DATAFILE)
+	# parse_csv(datafile)
+	d = parse_csv(datafile)
+	pprint.pprint(d)
 
 def test():
     # a simple test of your implemetation
@@ -66,4 +52,4 @@ def test():
     assert d[0] == firstline
     assert d[9] == tenthline
 
-print(parse_file(DATAFILE))
+# print(parse_file(DATAFILE))
